@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>light</TargetName>
+      <TargetName>fire</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>6180000::V6.18::ARMCLANG</pCCUsed>
@@ -410,14 +410,14 @@
           <GroupName>code</GroupName>
           <Files>
             <File>
-              <FileName>light.c</FileName>
+              <FileName>fire.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\code\light.c</FilePath>
+              <FilePath>..\code\fire.c</FilePath>
             </File>
             <File>
-              <FileName>light.h</FileName>
+              <FileName>fire.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\code\light.h</FilePath>
+              <FilePath>..\code\fire.h</FilePath>
             </File>
           </Files>
         </Group>

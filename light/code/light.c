@@ -6,7 +6,6 @@ void LIGHT_init_digital(gpio_pin_enum pin){
 }
 
 void LIGHT_init_analog(adc_channel_enum pin){
-//	gpio_init(pin, GPI, GPIO_HIGH, GPI_ANAOG_IN);
 	adc_init(pin, ADC_12BIT);
 	system_delay_ms(5);
 }
