@@ -459,6 +459,36 @@
               <FileType>5</FileType>
               <FilePath>..\code\smoke.h</FilePath>
             </File>
+            <File>
+              <FileName>mpu6050.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\code\mpu6050.c</FilePath>
+            </File>
+            <File>
+              <FileName>mpu6050.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\code\mpu6050.h</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_control.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\code\wifi_control.c</FilePath>
+            </File>
+            <File>
+              <FileName>wifi_control.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\code\wifi_control.h</FilePath>
+            </File>
+            <File>
+              <FileName>gps.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\code\gps.h</FilePath>
+            </File>
+            <File>
+              <FileName>gps.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\code\gps.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

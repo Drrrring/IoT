@@ -332,7 +332,7 @@ static uint8 wifi_uart_get_information (void)
     do
     {
         // 获取模块版本号
-        if(wifi_uart_get_version())
+        if(!wifi_uart_get_version())
         {
             return_state = 1;
             break;
@@ -708,7 +708,7 @@ uint8 wifi_uart_connect_udp_client (char *ip, char *port, char *local_port, wifi
 
         wifi_uart_clear_receive_buffer();                                       // 清空WiFi接收缓冲区
 
-        uart_write_string(WIFI_UART_INDEX, "AT+CIPSTARTEX=\"UDP\",\"");
+        uart_write_string(WIFI_UART_INDEX, "AT+CIPSTART=\"UDP\",\"");
         uart_write_string(WIFI_UART_INDEX, ip);
         uart_write_string(WIFI_UART_INDEX, "\",");
         uart_write_string(WIFI_UART_INDEX, port);
