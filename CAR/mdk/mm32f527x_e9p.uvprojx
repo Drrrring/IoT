@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>dht11-test</TargetName>
+      <TargetName>CAR</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>6180000::V6.18::ARMCLANG</pCCUsed>
@@ -410,14 +410,54 @@
           <GroupName>code</GroupName>
           <Files>
             <File>
+              <FileName>dht11.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\code\dht11.c</FilePath>
+            </File>
+            <File>
               <FileName>dht11.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\code\dht11.h</FilePath>
             </File>
             <File>
-              <FileName>dht11.c</FileName>
+              <FileName>fire.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\code\dht11.c</FilePath>
+              <FilePath>..\code\fire.c</FilePath>
+            </File>
+            <File>
+              <FileName>fire.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\code\fire.h</FilePath>
+            </File>
+            <File>
+              <FileName>light.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\code\light.c</FilePath>
+            </File>
+            <File>
+              <FileName>light.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\code\light.h</FilePath>
+            </File>
+            <File>
+              <FileName>mic.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\code\mic.c</FilePath>
+            </File>
+            <File>
+              <FileName>mic.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\code\mic.h</FilePath>
+            </File>
+            <File>
+              <FileName>smoke.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\code\smoke.c</FilePath>
+            </File>
+            <File>
+              <FileName>smoke.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\code\smoke.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -1326,7 +1366,6 @@
       <Layer>
         <LayName>mm32f527x_e9p</LayName>
         <LayPrjMark>1</LayPrjMark>
-        <LayTitle>dht11-test</LayTitle>
       </Layer>
     </Layers>
   </LayerInfo>
