@@ -489,6 +489,26 @@
               <FileType>1</FileType>
               <FilePath>..\code\gps.c</FilePath>
             </File>
+            <File>
+              <FileName>location.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\code\location.c</FilePath>
+            </File>
+            <File>
+              <FileName>location.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\code\location.h</FilePath>
+            </File>
+            <File>
+              <FileName>myfifo.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\code\myfifo.c</FilePath>
+            </File>
+            <File>
+              <FileName>myfifo.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\code\myfifo.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

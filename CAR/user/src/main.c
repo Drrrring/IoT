@@ -30,7 +30,9 @@
 int main(void) {
   clock_init(SYSTEM_CLOCK_120M); // 初始化芯片时钟 工作频率为 120MHz
   debug_init();                  // 初始化默认 Debug UART
-
+  // 初始化 location fifo
+  location_fifo_init();
+  
   // 用于保存数据的变量
   uint8 dht11_buf[5];
   uint8 value_fire = 200;

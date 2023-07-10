@@ -410,9 +410,14 @@
           <GroupName>code</GroupName>
           <Files>
             <File>
-              <FileName>本文件夹作用.txt</FileName>
+              <FileName>location.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\code\location.c</FilePath>
+            </File>
+            <File>
+              <FileName>location.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\code\本文件夹作用.txt</FilePath>
+              <FilePath>..\code\location.h</FilePath>
             </File>
           </Files>
         </Group>
