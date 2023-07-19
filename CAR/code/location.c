@@ -42,6 +42,7 @@ int location_fifo_write(location* dat) {
     return -2;
 }
 
+// 返回 0 表示正常， -1 表示队列为空；
 int location_fifo_read(location* dat) {
     return my_fifo_read(&location_fifo, dat);
 }

@@ -5,7 +5,7 @@
 // typedef struct 
 // {
 //     float latitude;    // 纬度
-//     float gratitude;   // 经度
+//     float longitude;   // 经度
 // } location;
 
 #define LOCATION_FLOAT_BUFFER_SIZE (101)
