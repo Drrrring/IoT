@@ -615,7 +615,7 @@ uint8 wifi_uart_connect_tcp_servers (char *ip, char *port, wifi_uart_transfer_mo
 
         wifi_uart_clear_receive_buffer();                                       // 清空WiFi接收缓冲区
 
-        uart_write_string(WIFI_UART_INDEX, "AT+CIPSTARTEX=\"TCP\",\"");
+        uart_write_string(WIFI_UART_INDEX, "AT+CIPSTART=\"TCP\",\"");
         uart_write_string(WIFI_UART_INDEX, ip);
         uart_write_string(WIFI_UART_INDEX, "\",");
         uart_write_string(WIFI_UART_INDEX, port);
