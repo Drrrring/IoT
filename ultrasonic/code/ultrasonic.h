@@ -10,9 +10,11 @@
 #define ULTRASONIC_OVERTIME_DISTANCE_MM 1750         // 超声波测距超时 距离默认为1750mm
 static uint16 ultrasonic_distance_mm;                // 超声波测出的距离 单位 mm
 static bool overtime = 0;                            // 超声波接收的信号是否超时
+static bool up = 0;                                  // 用在EXTI1_IRQHandler中断中，标识该边沿是上升沿还是下降沿
 
 void ultrasonic_init();
 void ultrasonic_range();
 void ultrasonic_receive_callback();
+void ultrasonic_test();
 
 #endif

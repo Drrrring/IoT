@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "zf_common_headfile.h": "c",
+        "ultrasonic.h": "c"
+    }
+}

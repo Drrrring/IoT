@@ -68,8 +68,8 @@ void TIM6_IRQHandler (void)
 {
     // 此处编写用户代码
     extern void ultrasonic_range();
-    void ultrasonic_range();
-    
+    ultrasonic_range();
+	
     // 此处编写用户代码
     TIM_ClearInterruptStatus((TIM_Type *)TIM6, TIM_GetInterruptStatus((TIM_Type *)TIM6));
 }
@@ -287,8 +287,6 @@ void UART7_IRQHandler (void)
 void EXTI0_IRQHandler (void)
 {
     // 此处编写用户代码 (A0/B0..I0) 引脚触发
-    extern void ultrasonic_receive_callback();
-    ultrasonic_receive_callback();
 
     // 此处编写用户代码 (A0/B0..I0) 引脚触发
     EXTI_ClearLineStatus(EXTI, EXTI_LINE_0);                                    // 清除 line0 触发标志
@@ -304,6 +302,9 @@ void EXTI1_IRQHandler (void)
     dl1a_int_handler();
     // -----------------* DL1A INT 更新中断 预置中断处理函数 *-----------------
     // 此处编写用户代码 (A1/B1..I1) 引脚触发
+
+    extern void ultrasonic_receive_callback();
+    ultrasonic_receive_callback();
 
     // 此处编写用户代码 (A1/B1..I1) 引脚触发
     EXTI_ClearLineStatus(EXTI, EXTI_LINE_1);                                    // 清除 line1 触发标志
