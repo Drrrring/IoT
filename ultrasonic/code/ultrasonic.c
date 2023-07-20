@@ -8,7 +8,6 @@ void ultrasonic_init()
     exti_init(ULTRASONIC_ECHO_PIN, EXTI_TRIGGER_BOTH);           // 接收引脚 双边沿时触发中断 在 EXTI1_IRQHandler 中完成中断处理
     pit_ms_init(TIM6_PIT, 2000);                                  // 初始化 TIM6_PIT 为周期中断 1000ms 周期 在 TIM6_IRQHandler 中完成中断处理
     timer_init(TIM_3, TIMER_US);                                  // 定时器使用 TIM_3 使用微秒级计数
-    printf("init\r\n");
 
     interrupt_set_priority(TIM6_IRQn, 2); 
 	interrupt_set_priority(TIM3_IRQn, 1); 
@@ -24,7 +23,6 @@ void ultrasonic_range()
     system_delay_us(11);
     gpio_low(ULTRASONIC_TRIG_PIN); // 发出测距信号
     timer_start(TIM_3);            // 开始计时
-    printf("range\r\n");
 }
 
 // 超声波模块接收到信号 外部中断回调函数
@@ -43,7 +41,6 @@ void ultrasonic_receive_callback()
         timer_clear(TIM_3);
         timer_start(TIM_3);         // 开始计时
         up = !up;
-        printf("!up\r\n");
     }
     else {
         timer_stop(TIM_3);         // 停止计时
