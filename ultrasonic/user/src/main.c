@@ -17,7 +17,9 @@ int main(void)
 
     while (1)
     {
-        system_delay_ms(100);
-        printf("in while\r\n");
+			  ultrasonic_block();
+        ultrasonic_run_test();
+        
+        //system_delay_ms(1000);
     }
 }

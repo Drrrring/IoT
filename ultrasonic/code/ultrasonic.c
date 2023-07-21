@@ -5,12 +5,12 @@ void ultrasonic_init()
 {
     gpio_init(ULTRASONIC_TRIG_PIN, GPO, GPIO_LOW, GPO_PUSH_PULL); // 触发引脚 推挽输出
     gpio_init(ULTRASONIC_ECHO_PIN, GPI, GPIO_LOW, GPI_PULL_DOWN); // 接收引脚 下拉输入（无输入时引脚为低电平）
-    exti_init(ULTRASONIC_ECHO_PIN, EXTI_TRIGGER_BOTH);           // 接收引脚 双边沿时触发中断 在 EXTI1_IRQHandler 中完成中断处理
-    pit_ms_init(TIM6_PIT, 2000);                                  // 初始化 TIM6_PIT 为周期中断 1000ms 周期 在 TIM6_IRQHandler 中完成中断处理
+    exti_init(ULTRASONIC_ECHO_PIN, EXTI_TRIGGER_BOTH);            // 接收引脚 双边沿时触发中断 在 EXTI1_IRQHandler 中完成中断处理
+    pit_ms_init(TIM6_PIT, 300);                                  // 初始化 TIM6_PIT 为周期中断 1000ms 周期 在 TIM6_IRQHandler 中完成中断处理
     timer_init(TIM_3, TIMER_US);                                  // 定时器使用 TIM_3 使用微秒级计数
 
-    interrupt_set_priority(TIM6_IRQn, 3); 
-	interrupt_set_priority(TIM3_IRQn, 2); 
+    interrupt_set_priority(TIM6_IRQn, 3);
+    interrupt_set_priority(TIM3_IRQn, 2);
     interrupt_set_priority(EXTI1_IRQn, 1);
 }
 
@@ -37,17 +37,27 @@ void ultrasonic_receive_callback()
     // printf("distance: %d\r\n", ultrasonic_distance_mm);
 
     // 当前电位为低，表示现在是上升沿，刚开始收到高电平
-    if (!up) {
+    if (!up)
+    {
         timer_clear(TIM_3);
-        timer_start(TIM_3);         // 开始计时
+        timer_start(TIM_3); // 开始计时
         up = !up;
     }
-    else {
-        timer_stop(TIM_3);         // 停止计时
+    else
+    {
+        timer_stop(TIM_3); // 停止计时
         int time = timer_get(TIM_3);
         ultrasonic_distance_mm = (float)time * ULTRASONIC_SPEED_MM_PER_US / 2;
         printf("time: %d, distance_mm: %d", time, ultrasonic_distance_mm);
         up = !up;
+
+        // 监测到障碍物距离小于300mm，阻塞
+        if (ultrasonic_distance_mm < 300)
+        {
+            barrier = 1;
+        } else {
+            barrier = 0;
+        }
     }
 }
 
@@ -77,4 +87,22 @@ void ultrasonic_test()
     int test_time = timer_get(TIM_4);
     int test_distance_mm = (float)test_time * ULTRASONIC_SPEED_MM_PER_US / 2;
     printf("time: %d, distance: %d\r\n", test_time, test_distance_mm);
+}
+
+void ultrasonic_run_test()
+{
+    printf("#000P1500T1000!#008P1800T1000!#009P1200T1000!");
+}
+
+void ultrasonic_block()
+{
+    // todo 发送信号告知后端已阻塞
+
+    // 当前面有障碍物时就什么都不做
+    while (barrier)
+    {
+    }
+
+    // TODO 发送信号告知后端已解除阻塞
+
 }
