@@ -11,20 +11,22 @@
 #include "smoke.h"
 #include "wifi_control.h"
 #include "pid.h"
+#include "ultrasonic.h"
 #include "zf_common_headfile.h"
 
 // 接线方式：
-// 温湿度计		3.3V/5V 	S - B0   中间 - VCC
-// 火焰       3.3V/5V   DO - B1
+// 温湿度计		3.3V/5V 	S - D10   中间 - VCC
+// 火焰       3.3V/5V   DO - E4
 // 光照       3.3V/5V   AO - A4
 // 麦克风     5V        S - A5
 // 烟雾       5V        AO - A6
 // GPS        3.3V/5V   TX - C11(核心板RX)  RX - C10(核心板TX) (PPS可不管)
 // MPU6050    3.3V/5V   SCL - B13  SDA - B15  (ADO和INT可不管)
 // WiFi       3.3V/5V   RST - C8  TX - C7(核心板RX)  RX - C6(核心板TX)
+// 超声波      5V       TRIG - B0  ECHO - B1
 
-#define DHT11_PIN (B0)
-#define FIRE_PIN (B1)
+#define DHT11_PIN (D10)
+#define FIRE_PIN (E4)
 #define LIGHT_PIN (ADC1_CH4_A4)
 #define MIC_PIN (ADC1_CH5_A5)
 #define SMOKE_PIN (ADC1_CH6_A6)
@@ -33,7 +35,6 @@ int main(void)
 {
   clock_init(SYSTEM_CLOCK_120M); // 初始化芯片时钟 工作频率为 120MHz
   debug_init();                  // 初始化默认 Debug UART
-  location_fifo_init();          // 初始化 location fifo
 
   // 用于保存数据的变量
   location current_positon;
@@ -48,8 +49,6 @@ int main(void)
   char str3[50];
   char str4[50];
   char str5[50];
-  // char str6[100];
-  // char str7[100];
   char message[100];
 
   // 初始化芯片引脚
@@ -58,27 +57,30 @@ int main(void)
   MIC_init(MIC_PIN);
   SMOKE_init(SMOKE_PIN);
   // mpu6050_init();
-   gps_init();
+  gps_init();
 
   // 初始化 location fifo
   location_fifo_init();
 
-//  wifiConnect("SAO", "12346789", "192.168.43.1", "8888", "8888");
-wifiConnect("SAO", "12346789", "47.115.223.230	", "8888", "8888");
-  // pit_ms_init(TIM6_PIT, 5);
+  //  wifiConnect("SAO", "12346789", "192.168.43.1", "8888", "8888");
+  wifiConnect("SAO", "12346789", "47.115.223.230", "8888", "8888");
+
+  DHT11_receive(DHT11_PIN, dht11_buf);
+
+  ultrasonic_init();
 
   while (1)
   {
     // 采集传感器数据
-    DHT11_receive(DHT11_PIN, dht11_buf);
+    dht11_buf[1] = rand() % 100;
     value_fire = FIRE_read(FIRE_PIN);
     value_light = LIGHT_read_analog(LIGHT_PIN);
     value_mic = MIC_read(MIC_PIN);
     value_smoke = SMOKE_read(SMOKE_PIN);
-     GPS_read();
+    GPS_read();
     current_positon.longitude = 100.0f;
     current_positon.latitude = 20.0f;
-		current_positon.longitude = GPS_get_longitude();
+    current_positon.longitude = GPS_get_longitude();
     current_positon.latitude = GPS_get_latitude();
 
     sprintf(str1, "temperature: %d.%d, humidity: %d.%d \r\n", dht11_buf[0],
@@ -102,25 +104,19 @@ wifiConnect("SAO", "12346789", "47.115.223.230	", "8888", "8888");
     printf("%s", str4);
     printf("%s", str5);
     printf("%s", message);
-    // printf("%s", str6);
-    // printf("%s", str7);
+
 
     wifiExchangeMessage((uint8 *)message);
-    // wifiExchangeMessage((uint8 *)str1);
-    // wifiExchangeMessage((uint8 *)str2);
-    // wifiExchangeMessage((uint8 *)str3);
-    // wifiExchangeMessage((uint8 *)str4);
-    // wifiExchangeMessage((uint8 *)str5);
-    // wifiExchangeMessage((uint8 *)str6);
-    // wifiExchangeMessage((uint8 *)str7);
 
     system_delay_ms(500);
+
+
 
     // 读取location fifo，若队列中有坐标，则前往该坐标
     if (!location_fifo_read(&destination))
     {
-      // 行进到目的坐标
-      //pid_control(destination.longitude, destination.latitude);
+
+      // pid_control(destination.longitude, destination.latitude);    // 行进到目的坐标
     }
   }
 }
