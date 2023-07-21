@@ -9,9 +9,9 @@ void ultrasonic_init()
     pit_ms_init(TIM6_PIT, 2000);                                  // 初始化 TIM6_PIT 为周期中断 1000ms 周期 在 TIM6_IRQHandler 中完成中断处理
     timer_init(TIM_3, TIMER_US);                                  // 定时器使用 TIM_3 使用微秒级计数
 
-    interrupt_set_priority(TIM6_IRQn, 2); 
-	interrupt_set_priority(TIM3_IRQn, 1); 
-    interrupt_set_priority(EXTI1_IRQn, 0);
+    interrupt_set_priority(TIM6_IRQn, 3); 
+	interrupt_set_priority(TIM3_IRQn, 2); 
+    interrupt_set_priority(EXTI1_IRQn, 1);
 }
 
 // 超声波模块开始发送测距信号

@@ -14,6 +14,9 @@ void wifiConnect(char *wifi_ssid, char *wifi_password, char *target_ip, char *ta
 	// 打印外设初始化语句
 	printf("\r\n Wi-Fi UART init.");
 
+	// 将 wifi uart 的中断级别设置为最高
+	interrupt_set_priority(UART6_IRQn, 0);
+
 	// 当前使用的是 WIFI 串口模块的 station 模式 可以用于连接路由器 WIFI
 	// 发送数据方式可以使用命令发送(默认) 也可以使用透传发送 可以在 wifi_uart_init 函数内修改 <当模块作为服务器时 只能使用命令方式发送数据>
 	while (wifi_uart_init(wifi_ssid, wifi_password, WIFI_UART_STATION))
