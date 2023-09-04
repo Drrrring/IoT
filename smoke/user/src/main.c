@@ -12,11 +12,11 @@ int main (void)
     clock_init(SYSTEM_CLOCK_120M);                                              // 初始化芯片时钟 工作频率为 120MHz
     debug_init();                                                               // 初始化默认 Debug UART
 
-		SMOKE_init(SMOKE_PIN);
+		SMOKE_init(MQ2_PIN);
 		uint8 smoke_value = 200;
     while(1)
     {
-			smoke_value = SMOKE_read(SMOKE_PIN);
+			smoke_value = SMOKE_read(MQ2_PIN);
 			printf("smoke: %d \r\n", smoke_value);
 			system_delay_ms(1000);
     }
