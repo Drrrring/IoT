@@ -203,8 +203,8 @@ void UART3_IRQHandler (void)
         // 此处编写用户代码
         // 务必读取数据或者关闭中断 否则会一直触发串口接收中断
         
-        extern void uart_rx_interrupt_handler (void);
-        uart_rx_interrupt_handler();
+        // extern void uart_rx_interrupt_handler (void);
+        // uart_rx_interrupt_handler();
 
         // 此处编写用户代码
         UART_ClearInterruptStatus(UART3, UART_INT_RX_DONE);                     // 清除中断标志位
@@ -255,11 +255,12 @@ void UART5_IRQHandler (void)
     if(UART_INT_RX_DONE & UART_GetInterruptStatus(UART5))                       // 串口接收缓冲中断
     {
         // -----------------* 摄像头初始化 串口 预置中断处理函数 *-----------------
-        camera_uart_handler();
+        // camera_uart_handler();
         // -----------------* 摄像头初始化 串口 预置中断处理函数 *-----------------
         // 此处编写用户代码
         // 务必读取数据或者关闭中断 否则会一直触发串口接收中断
-
+        extern void uart_rx_interrupt_handler (void);
+        uart_rx_interrupt_handler();
         // 此处编写用户代码
         UART_ClearInterruptStatus(UART5, UART_INT_RX_DONE);                     // 清除中断标志位
     }
