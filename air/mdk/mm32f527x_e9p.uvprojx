@@ -7,7 +7,7 @@
 
   <Targets>
     <Target>
-      <TargetName>CAR</TargetName>
+      <TargetName>mm32f527x_e9p_project</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
       <pCCUsed>6180000::V6.18::ARMCLANG</pCCUsed>
@@ -410,144 +410,14 @@
           <GroupName>code</GroupName>
           <Files>
             <File>
-              <FileName>dht11.c</FileName>
+              <FileName>air.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\code\dht11.c</FilePath>
+              <FilePath>..\code\air.c</FilePath>
             </File>
             <File>
-              <FileName>dht11.h</FileName>
+              <FileName>air.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\code\dht11.h</FilePath>
-            </File>
-            <File>
-              <FileName>fire.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\code\fire.c</FilePath>
-            </File>
-            <File>
-              <FileName>fire.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\code\fire.h</FilePath>
-            </File>
-            <File>
-              <FileName>light.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\code\light.c</FilePath>
-            </File>
-            <File>
-              <FileName>light.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\code\light.h</FilePath>
-            </File>
-            <File>
-              <FileName>mic.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\code\mic.c</FilePath>
-            </File>
-            <File>
-              <FileName>mic.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\code\mic.h</FilePath>
-            </File>
-            <File>
-              <FileName>smoke.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\code\smoke.c</FilePath>
-            </File>
-            <File>
-              <FileName>smoke.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\code\smoke.h</FilePath>
-            </File>
-            <File>
-              <FileName>mpu6050.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\code\mpu6050.c</FilePath>
-            </File>
-            <File>
-              <FileName>mpu6050.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\code\mpu6050.h</FilePath>
-            </File>
-            <File>
-              <FileName>wifi_control.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\code\wifi_control.c</FilePath>
-            </File>
-            <File>
-              <FileName>wifi_control.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\code\wifi_control.h</FilePath>
-            </File>
-            <File>
-              <FileName>gps.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\code\gps.h</FilePath>
-            </File>
-            <File>
-              <FileName>gps.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\code\gps.c</FilePath>
-            </File>
-            <File>
-              <FileName>location.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\code\location.c</FilePath>
-            </File>
-            <File>
-              <FileName>location.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\code\location.h</FilePath>
-            </File>
-            <File>
-              <FileName>myfifo.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\code\myfifo.c</FilePath>
-            </File>
-            <File>
-              <FileName>myfifo.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\code\myfifo.h</FilePath>
-            </File>
-            <File>
-              <FileName>ultrasonic.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\code\ultrasonic.c</FilePath>
-            </File>
-            <File>
-              <FileName>ultrasonic.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\code\ultrasonic.h</FilePath>
-            </File>
-            <File>
-              <FileName>noise.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\code\noise.c</FilePath>
-            </File>
-            <File>
-              <FileName>noise.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\code\noise.h</FilePath>
-            </File>
-            <File>
-              <FileName>pid.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\code\pid.h</FilePath>
-            </File>
-            <File>
-              <FileName>pid.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\code\pid.c</FilePath>
-            </File>
-            <File>
-              <FileName>pm2_5.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\code\pm2_5.c</FilePath>
-            </File>
-            <File>
-              <FileName>pm2_5.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\code\pm2_5.h</FilePath>
+              <FilePath>..\code\air.h</FilePath>
             </File>
           </Files>
         </Group>
