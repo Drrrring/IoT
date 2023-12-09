@@ -20,4 +20,5 @@ CAR文件夹为完整的工程代码
  | 噪声             | 5V      | RX - D8            | TX - D9            |
  | MQ7              | 5V      | AO - A7            |
  | MQ135            | 5V      | AO - A4            |
- | PM2.5            | 5V      | AO - A5            | PUL - B0           |
+ | PM2.5（已换新传感器）| 5V      | AO - A5            | PUL - B0           |
+ | 空气（新）          |5V       | RX - D8            |TX - D9|
