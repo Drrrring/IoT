@@ -14,6 +14,7 @@
 #include "ultrasonic.h"
 #include "noise.h"
 #include "pm2_5.h"
+#include "air.h"
 #include "zf_common_headfile.h"
 
 // 接线方式：
@@ -21,13 +22,14 @@
 //// 火焰       3.3V/5V   DO - E4   （已移除）
 //// 光照       3.3V/5V   AO - A4   （已移除）
 //// 麦克风     5V        S - A5    （已移除）
-// 烟雾（MQ2）       5V        AO - A6
+
 // GPS        3.3V/5V   TX - C11(核心板RX)  RX - C10(核心板TX) (PPS可不管)
 // MPU6050    3.3V/5V   SCL - B13  SDA - B15  (ADO和INT可不管)
 // WiFi       3.3V/5V   TX - C7(核心板RX)  RX - C6(核心板TX)  RST - C8
 // 超声波      5V       TRIG - B0  ECHO - B1
-// 噪声       5V        RX - D8  TX - D9    //改成 RX - C12  TX - D2
+// 噪声       5V        改成 RX - C12  TX - D2
 // MQ7        5V        A7
+// 烟雾（MQ2） 5V        AO - A6
 // MQ135      5V        A4
 // PM2.5      5V        A5   PUL - B0
 // 空气       5V        RX - D8  TX - D9 （PIN1: VCC, PIN2: GND, PIN4: RXD, PIN5: TXD)
@@ -48,6 +50,14 @@ extern uint8 get_data;          // 接收数据变量
 extern uint32 fifo_data_count;  // fifo 数据个数
 extern fifo_struct uart_data_fifo;
 extern uint8 noise_db; // 保存噪声分贝
+
+// 空气传感器相关变量（定义在air.c中）
+extern uint8 air_uart_get_data[128]; // 串口接收数据缓冲区
+extern uint8 air_fifo_get_data[128]; // fifo 输出读出缓冲区
+extern uint8 air_get_data;         // 接收数据变量
+extern uint32 air_fifo_data_count; // fifo 数据个数
+extern fifo_struct air_uart_data_fifo;
+extern uint8 air_res; // 保存空气质量数据
 
 int main(void)
 {
@@ -71,6 +81,7 @@ int main(void)
   char str3[50];
   char str4[50];
   char str5[50];
+  char str6[50];
   char message[100];
 
   // 初始化芯片引脚
@@ -81,15 +92,15 @@ int main(void)
   SMOKE_init(MQ2_PIN);   // MQ2传感器初始化
   SMOKE_init(MQ7_PIN);   // MQ7传感器初始化
   SMOKE_init(MQ135_PIN); // MQ135传感器初始化
-  PM25_init();           // PM2.5传感器初始化
+  // PM25_init();           // PM2.5传感器初始化
   mpu6050_init();        // 陀螺仪初始化
   gps_init();            // gps初始化
-
+  AIR_init();            // 空气质量传感器初始化
   // 初始化 location fifo
   location_fifo_init();
 
-  //  wifiConnect("SAO", "12346789", "192.168.43.1", "8888", "8888");
-  wifiConnect("SAO", "12346789", "47.115.223.230", "8888", "8888");
+  wifiConnect("SAO", "12346789", "192.168.43.15", "8888", "8888");
+   //wifiConnect("SAO", "12346789", "47.115.223.230", "8888", "8888");
   // wifiConnect("SAO", "12346789", "192.168.43.120", "8888", "8888");
 
   DHT11_receive(DHT11_PIN, dht11_buf);
@@ -105,10 +116,11 @@ int main(void)
     // value_mic = MIC_read(MIC_PIN);
     // value_mic = 60 + rand() % 10;
     NOISE_read();
+    AIR_read();
     value_MQ2 = SMOKE_read(MQ2_PIN);
     value_MQ7 = SMOKE_read(MQ7_PIN);
     value_MQ135 = SMOKE_read(MQ135_PIN);
-//    value_PM25 = PM25_read();
+    // value_PM25 = PM25_read();
     GPS_read();
     current_positon.longitude = 118.957161f;
     current_positon.latitude = 32.110364f;
@@ -124,10 +136,13 @@ int main(void)
     // sprintf(str4, "mic: %d \t", value_mic);
     sprintf(str4, "noise: %d \t", noise_db);
     sprintf(str5, "MQ2: %d \r\n", value_MQ2);
-    sprintf(message, "%03d%02d%03d%02d%03d%03d%03d%03d%03d%03d%7.6f%9.6f%8.6f1", dht11_buf[0],
+    sprintf(str6, "PM2.5: %d \r\n", air_res);
+//    sprintf(message, "%03d%02d%03d%02d%03d%03d%03d%03d%03d%03d%03d%9.6f%8.6f1", dht11_buf[0],
+//            dht11_buf[1], dht11_buf[2], dht11_buf[3], noise_db, value_MQ2,
+//            value_light, value_fire, value_MQ135, value_MQ7, air_res, current_positon.longitude, current_positon.latitude);
+		sprintf(message, "%03d%02d%03d%02d%03d%03d%03d%03d%03d%03d%7.6f%9.6f%8.6f1", dht11_buf[0],
             dht11_buf[1], dht11_buf[2], dht11_buf[3], noise_db, value_MQ2,
-            value_light, value_fire, value_MQ135, value_MQ7, value_PM25, current_positon.longitude, current_positon.latitude);
-
+            value_light, value_fire, value_MQ135, value_MQ7, (double)air_res, current_positon.longitude, current_positon.latitude);
     // sprintf(str6, "MPU6050 acc data:  x=%5d, y=%5d, z=%5d\r\n", mpu6050_acc_x,
     //         mpu6050_acc_y, mpu6050_acc_z);
     // sprintf(str7, "MPU6050 gyro data: x=%5d, y=%5d, z=%5d\r\n", mpu6050_gyro_x,
@@ -138,6 +153,7 @@ int main(void)
     printf("%s", str3);
     printf("%s", str4);
     printf("%s", str5);
+    printf("%s", str6);
     printf("MQ135: %d\r\n", value_MQ135);
     printf("MQ7: %d\r\n", value_MQ7);
     printf("%s\r\n", message);
@@ -160,4 +176,10 @@ void uart_rx_interrupt_handler(void)
 {
   uart_query_byte(UART_INDEX, &get_data);           // 接收数据 查询式 有数据会返回 TRUE 没有数据会返回 FALSE
   fifo_write_buffer(&uart_data_fifo, &get_data, 1); // 将数据写入 fifo 中
+}
+
+void uart_rx_interrupt_handler_air(void)
+{
+  uart_query_byte(UART_INDEX_AIR, &air_get_data);           // 接收数据 查询式 有数据会返回 TRUE 没有数据会返回 FALSE
+  fifo_write_buffer(&air_uart_data_fifo, &air_get_data, 1); // 将数据写入 fifo 中
 }
